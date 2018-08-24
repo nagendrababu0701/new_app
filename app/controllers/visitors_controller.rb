@@ -76,6 +76,9 @@ response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
 end
   end
 
+
+
+
   def project_policy_binding(project_name,lanid)
     uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/rolebindings/admin")
     request = Net::HTTP::Put.new(uri)
