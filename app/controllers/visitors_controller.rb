@@ -5,7 +5,7 @@ class VisitorsController < ApplicationController
    require 'uri'
    require 'json'
    require 'openssl'
-  TOKEN = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJvcGVuc2hpZnQtaW5mcmEiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoicG9jZmx5LXRva2VuLXZ2ZjhuIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InBvY2ZseSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImNlM2ZmNWVhLThiMjktMTFlOC04ZmVhLTAwMWRkOGI3MjU4MSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVuc2hpZnQtaW5mcmE6cG9jZmx5In0.YE7JCkuKZiERZpPGoI6cpDRXtymrRvy_NU4SqujEsx5QdO2CobUOBo37o4hFvn6UNtU_95iIRzPUMOfLIsPNh7R_3DbKxP3Z5XNB648987_fbb2dbjAGPgc_R98z4NixgDHsp0UZgDx3cqfwDFQVBCBzFRflpMFdA69Vv-p6-RNHq0rMwl_ddZL-4qcL8NaxeTnUfNQfROUTOUqtF6vYyhfUQzsAlNrqUZinXpLlaTdj4EKbpbGWlecA0jrG2j26eMrOLQlsKsNfm6Sm57eGTNidDlxDUGYD6hgyjQW9uKLUtCZ3snaa4CYUTyjSs1I5lijZAKm-n2pxlnl97r2K3g"
+  TOKEN = "Bearer 1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJvcGVuc2hpZnQtaW5mcmEiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoicG9jZmx5LXRva2VuLXZ2ZjhuIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InBvY2ZseSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImNlM2ZmNWVhLThiMjktMTFlOC04ZmVhLTAwMWRkOGI3MjU4MSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVuc2hpZnQtaW5mcmE6cG9jZmx5In0.YE7JCkuKZiERZpPGoI6cpDRXtymrRvy_NU4SqujEsx5QdO2CobUOBo37o4hFvn6UNtU_95iIRzPUMOfLIsPNh7R_3DbKxP3Z5XNB648987_fbb2dbjAGPgc_R98z4NixgDHsp0UZgDx3cqfwDFQVBCBzFRflpMFdA69Vv-p6-RNHq0rMwl_ddZL-4qcL8NaxeTnUfNQfROUTOUqtF6vYyhfUQzsAlNrqUZinXpLlaTdj4EKbpbGWlecA0jrG2j26eMrOLQlsKsNfm6Sm57eGTNidDlxDUGYD6hgyjQW9uKLUtCZ3snaa4CYUTyjSs1I5lijZAKm-n2pxlnl97r2K3g"
     
   def index
     @user = current_user
@@ -33,7 +33,7 @@ class VisitorsController < ApplicationController
       @visitor.git_repo_url = git_url
       @visitor.save
       #test_pvc(proj_name, pvc_availble)
-      pvc_build_container(proj_name,pvc_availble)
+     # pvc_build_container(proj_name,pvc_availble)
       #pvc_availble.pv_used = 1
       #pvc_availble.project_name = @visitor.try(:project_name)
       #pvc_availble.save
@@ -52,7 +52,7 @@ class VisitorsController < ApplicationController
   end
 
   def new_project_app(project_name)
-    uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/projectrequests")
+    uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/projectrequests")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Accept"] = "application/json"
@@ -77,7 +77,7 @@ end
   end
 
   def project_policy_binding(project_name,lanid)
-    uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/namespaces/"+project_name+"/rolebindings/admin")
+    uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/rolebindings/admin")
     request = Net::HTTP::Put.new(uri)
     request.content_type = "application/json"
     request["Accept"] = "application/json"
@@ -90,15 +90,15 @@ end
     "namespace" => project_name
   },
   "userNames" => [
-    "system:serviceaccount:openshift-infra:pocfly",
+    "system:serviceaccount:ruby-project:default",
     lanid
   ],
   "groupNames" => nil,
   "subjects" => [
     {
       "kind" => "ServiceAccount",
-      "namespace" => "openshift-infra",
-      "name" => "pocfly"
+      "namespace" => "ruby-project",
+      "name" => "default"
     },
     {
       "kind" => "User",
@@ -123,7 +123,7 @@ end
 
   def git_repo_build(project_name)
   
-    uri = URI.parse("http://gogs.apps.cpaas.service.test/api/v1/user/repos?token=069a01464480025f134bd21e0f92163a4fe4d63a")
+    uri = URI.parse("http://gogs-gogs.apps.208b.example.opentlc.com/api/v1/user/repos?token=f5e5d49f2757187aebf397f7e38155f5c5fc0b63")
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/x-www-form-urlencoded"
     request["Accept"] = "application/json"
@@ -181,7 +181,7 @@ end
   end
 
   def mysql_build_container(project_name,pv)
-   uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/namespaces/"+project_name+"/deploymentconfigs")
+   uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/deploymentconfigs")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
@@ -235,7 +235,7 @@ request.body = JSON.dump({
                 "value" => "password"
               }
             ],
-            "image" => "dcartifactory.service.dev:5000/openshift3/mysql-57-rhel7:latest",
+            "image" => "registry.access.redhat.com/rhscl/mysql-57-rhel7",
             "imagePullPolicy" => "Always",
             "name" => "mysql",
             "ports" => [
@@ -280,7 +280,7 @@ end
   end
 
   def svc_build_container(project_name)
-   uri = URI.parse("https://ose.cpaas.service.test:8443/api/v1/namespaces/"+project_name+"/services")
+   uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/api/v1/namespaces/"+project_name+"/services")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
@@ -319,7 +319,7 @@ end
 
   def destroy
     project = Project.find_by_id(params[:id])
-    uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/projects/"+project.try(:project_name))
+    uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/projects/"+project.try(:project_name))
 request = Net::HTTP::Delete.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
