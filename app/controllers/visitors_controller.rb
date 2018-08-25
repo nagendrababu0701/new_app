@@ -126,7 +126,7 @@ end
 
   def git_repo_build(project_name)
   
-    uri = URI.parse("http://gogs-gogs.apps.208b.example.opentlc.com/api/v1/user/repos?token=f5e5d49f2757187aebf397f7e38155f5c5fc0b63")
+    uri = URI.parse("http://gogs-gogs.apps.208b.example.opentlc.com/api/v1/user/repos?token=7ed7c8104ff00b418376f92bf816da4eab78e5ee")
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/x-www-form-urlencoded"
     request["Accept"] = "application/json"
