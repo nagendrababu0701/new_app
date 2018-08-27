@@ -14,11 +14,11 @@
         <div class="panel-body well" style="margin: 3%;">
           <ul class="list-group">
             <li class="list-group-item"><strong>LanId: <%=@user.try(:lanid)%></strong></li>
-            <li class="list-group-item"><strong>Console URL: </strong><span>https://ose.cpaas.service.test:8443</span></li>
+            <li class="list-group-item"><strong>Console URL: </strong><span>https://loadbalancer1.208b.example.opentlc.com/console</span></li>
             <li class="list-group-item"><strong>To intaract with OpenShift Platform you will need the <a href="https://www.openshift.org/download.html">OC client</a></strong></li>
             <li class="list-group-item"><h3>oc Login Steps</h3></strong>
                 <ul class="inside">
-                <li>oc login https://ose.cpaas.service.test:8443</li>
+                <li>oc login https://loadbalancer1.208b.example.opentlc.com/console</li>
                 <li>Username: <%=@user.try(:lanid)%></li>
                 <li>Password: (Your globaltest_account_password)</li>
                 </ul>
@@ -55,7 +55,7 @@
                 <li>git push origin</li>
             </ul>
           </li>
-<li class="list-group-item"><b>Username:- pocfly</b><br><b>Password:- ********</b></li>
+<li class="list-group-item"><b>Username:- siddu</b><br><b>Password:- *********</b></li>
           </ul>
           <div class="col-md5"><%=link_to 'Start Build', new_build_visitors_path(project_name: @project.try(:project_name)), class: "btn btn-primary"%></div>
           </div>
@@ -73,11 +73,11 @@
             <li class="list-group-item"><strong>Project startdate:</strong><%=Time.now%></li>
             <li class="list-group-item"><strong>Days Remaing:</strong><span>30 Days</span> </li>
 
-	    <li class="list-group-item"><strong>Jenkins URL: jenkins.apps.cpaas.service.test</strong>
+	   <!-- <li class="list-group-item"><strong>Jenkins URL: jenkins.apps.cpaas.service.test</strong>
 		<br>
 <b>Username :- admin</b><br>
 <b>Password :- ********</b>
-</li>
+</li>-->
             <li class="list-group-item"><strong>Extend Project date:</strong></li>
 	    <li class="list-group-item">
             <span class="input-group date" style="width:20%">
