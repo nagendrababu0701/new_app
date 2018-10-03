@@ -93,14 +93,14 @@ end
     "namespace" => project_name
   },
   "userNames" => [
-    "system:serviceaccount:ruby-project:default",
+    "system:serviceaccount:"+project_name+":default",
     lanid
   ],
   "groupNames" => nil,
   "subjects" => [
     {
       "kind" => "ServiceAccount",
-      "namespace" => "ruby-project",
+      "namespace" => project_name,
       "name" => "default"
     },
     {
