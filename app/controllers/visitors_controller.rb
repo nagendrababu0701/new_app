@@ -184,7 +184,7 @@ end
   end
 
   def mysql_build_container(project_name,pv)
-   uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/deploymentconfigs")
+   uri = URI.parse("https://loadbalancer1.fa6d.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/deploymentconfigs")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
@@ -283,7 +283,7 @@ end
   end
 
   def svc_build_container(project_name)
-   uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/api/v1/namespaces/"+project_name+"/services")
+   uri = URI.parse("https://loadbalancer1.fa6d.example.opentlc.com/api/v1/namespaces/"+project_name+"/services")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
@@ -322,7 +322,7 @@ end
 
   def destroy
     project = Project.find_by_id(params[:id])
-    uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/projects/"+project.try(:project_name))
+    uri = URI.parse("https://loadbalancer1.fa6d.example.opentlc.com/oapi/v1/projects/"+project.try(:project_name))
 request = Net::HTTP::Delete.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
