@@ -1,7 +1,7 @@
 <% user =  ENV["POSTGRESQL_USER"] %>
 <% password = ENV["POSTGRESQL_PASSWORD"] %>
-<% host = ENV["POSTGRESQL_HOST"]
-<% port = ENV["POSTGRESQL_PORT"]
+<% host = ENV["POSTGRESQL_HOST"] %>
+<% port = ENV["POSTGRESQL_PORT"] %>
 <% db_service = ENV.fetch("DATABASE_SERVICE_NAME","").upcase %>
 
 default: &default
