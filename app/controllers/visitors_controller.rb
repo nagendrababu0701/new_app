@@ -5,7 +5,7 @@ class VisitorsController < ApplicationController
    require 'uri'
    require 'json'
    require 'openssl'
-  TOKEN = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJydWJ5LXByb2plY3QiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoicG9jZmx5LXRva2VuLTh0c3pnIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InBvY2ZseSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImUxNmQzMGNjLWE3OTUtMTFlOC1hY2JmLTE2YTBhMGRjNWVlNiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpydWJ5LXByb2plY3Q6cG9jZmx5In0.KXcTbnLGzZTvAqNaW396ri19rIdy1dJ4bphd7Q3f2kNfnlyqd5BdkqWBKtACrZGvx6ir5SX9celgAHHvnKGnujQPJDWuaHzU8icJ4X3aDM93220WjCYrrSRT8x4ZNjJAYJGa9NKKDwANpibb4MEBMXO-ow0LyyQS874vG6cJkKbJ98iOK3LTe5LmBTmGkNinzlHLgp3bQYbWf7H5hLSptnsZtIWqvFjddBeZKQDYp7O7ASblAps0Bq_QTLWNpzeTHXGdMeCJr2FTyVOV1KTwDVcQ_-j6UyEApg99QY_4PiVSsCpDAKWSGqptxdRGePM0jjlv_XBSqeZ_z8AGkDwwpw"
+  TOKEN = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJwZGZseSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJwZGZseS10b2tlbi1iaHNybiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJwZGZseSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImY2NTM5MGQxLWM2ZGEtMTFlOC1iMjczLTA2N2VlNjBmYTA2MCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpwZGZseTpwZGZseSJ9.O-fI5skvL9BT5Il4_iucugw9Qf6gzLwOxhJK-cR6t49vq7MwxBjnz1U5i_uJ-dcxDcAhoIE-q4I22cWLnk0h-7oksO8zbtlmpmxJgHpiHoi8v1-GEFD9nuGItxdknuVR_vjL8hkKoT4kDpBXbBPCrOYQNbbSU6_8dzx9-cb2fS8SrZi_CjhtFqZtn5mY85fLCH2TWrvzM8k_QdVZ69G9Orb6wVKfyv_VRpHvPzECXpEgCyvg2-1ZVoAORhGbJXcvzf9i5-lpCSdgGLGNPQeRKd7iHPspB5Ca3-gvs3nPir_LTyZS3U48KWWYqNDOPmZo66Wt1Y7IXO8L1UYXNfbuMQ"
     
   def index
     @user = current_user
@@ -52,7 +52,7 @@ class VisitorsController < ApplicationController
   end
 
   def new_project_app(project_name)
-    uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/projectrequests")
+    uri = URI.parse("https://loadbalancer1.fa6d.example.opentlc.com/oapi/v1/projectrequests")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Accept"] = "application/json"
@@ -80,7 +80,7 @@ end
 
 
   def project_policy_binding(project_name,lanid)
-    uri = URI.parse("https://loadbalancer1.208b.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/rolebindings/admin")
+    uri = URI.parse("https://loadbalancer1.fa6d.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/rolebindings/admin")
     request = Net::HTTP::Put.new(uri)
     request.content_type = "application/json"
     request["Accept"] = "application/json"
@@ -126,7 +126,7 @@ end
 
   def git_repo_build(project_name)
   
-    uri = URI.parse("http://gogs-gogs.apps.208b.example.opentlc.com/api/v1/user/repos?token=7ed7c8104ff00b418376f92bf816da4eab78e5ee")
+    uri = URI.parse("http://gogs-pdgogs.apps.fa6d.example.opentlc.com/api/v1/user/repos?token=fbee2a55af6d02b5b4396a57b143dd1f3bb8899c")
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/x-www-form-urlencoded"
     request["Accept"] = "application/json"
