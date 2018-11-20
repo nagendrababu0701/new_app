@@ -2,7 +2,7 @@
     <div style="margin-left:100px">
       <h2>Project Name: <%=@project.project_name%></h2>
     </div>
-    <main role="main" class="container panel" style="padding: 2%;border: 1px solid #eee;">
+    <main role="main" class="container panel" style="padding: 2%;border: 1px solid #eee;background-color: #3172ca99">
         <div class="panel-group" id="accordion">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -14,11 +14,11 @@
         <div class="panel-body well" style="margin: 3%;">
           <ul class="list-group">
             <li class="list-group-item"><strong>LanId: <%=@user.try(:lanid)%></strong></li>
-            <li class="list-group-item"><strong>Console URL: </strong><span>https://loadbalancer1.208b.example.opentlc.com/console</span></li>
+            <li class="list-group-item"><strong>Console URL: </strong><span>https://ose.cpaas.service.test:8443/console</span></li>
             <li class="list-group-item"><strong>To intaract with OpenShift Platform you will need the <a href="https://www.openshift.org/download.html">OC client</a></strong></li>
             <li class="list-group-item"><h3>oc Login Steps</h3></strong>
                 <ul class="inside">
-                <li>oc login https://loadbalancer1.208b.example.opentlc.com/console</li>
+                <li>oc login https://ose.cpaas.service.test:8443/console</li>
                 <li>Username: <%=@user.try(:lanid)%></li>
                 <li>Password: (Your globaltest_account_password)</li>
                 </ul>

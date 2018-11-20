@@ -21,26 +21,27 @@ class VisitorsController < ApplicationController
   end
 
   def create
+    @project = Project.new
     @visitor = current_user.build_project(secure_params)
     pvc_availble = PvContainer.where(pv_used: 0).first
     proj_name =  @visitor.try(:project_name)
     if @visitor.save
-      p "=============#{proj_name} ===== project"
-      p "================ #{TOKEN} =======token======"
-      new_project_app(proj_name)
-      project_policy_binding(proj_name, current_user.try(:lanid))
-      git_url = git_repo_build(proj_name)
-      @visitor.git_repo_url = git_url
-      @visitor.save
-      #test_pvc(proj_name, pvc_availble)
-     # pvc_build_container(proj_name,pvc_availble)
-      #pvc_availble.pv_used = 1
-      #pvc_availble.project_name = @visitor.try(:project_name)
-      #pvc_availble.save
-      mysql_build_container(proj_name,pvc_availble)
-      svc_build_container(proj_name)
-      flash[:notice] = "project created successful"
-      redirect_to visitors_path 
+     #  p "=============#{proj_name} ===== project"
+     #  p "================ #{TOKEN} =======token======"
+     #  new_project_app(proj_name)
+     #  project_policy_binding(proj_name, current_user.try(:lanid))
+     #  git_url = git_repo_build(proj_name)
+     #  @visitor.git_repo_url = git_url
+     #  @visitor.save
+     #  #test_pvc(proj_name, pvc_availble)
+     # # pvc_build_container(proj_name,pvc_availble)
+     #  #pvc_availble.pv_used = 1
+     #  #pvc_availble.project_name = @visitor.try(:project_name)
+     #  #pvc_availble.save
+     #  params["project"]["db_name"] == "Mysql" ? mysql_build_container(proj_name,pvc_availble) : postgres_build_container(proj_name,pvc_availble)
+     #  svc_build_container(proj_name)
+       flash[:notice] = "project created successful"
+       redirect_to visitors_path 
     else
       render :new
     end
@@ -52,7 +53,7 @@ class VisitorsController < ApplicationController
   end
 
   def new_project_app(project_name)
-    uri = URI.parse("https://loadbalancer1.abd6.example.opentlc.com/oapi/v1/projectrequests")
+    uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/projectrequests")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Accept"] = "application/json"
@@ -80,7 +81,7 @@ end
 
 
   def project_policy_binding(project_name,lanid)
-    uri = URI.parse("https://loadbalancer1.abd6.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/rolebindings/admin")
+    uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/namespaces/"+project_name+"/rolebindings/admin")
     request = Net::HTTP::Put.new(uri)
     request.content_type = "application/json"
     request["Accept"] = "application/json"
@@ -184,7 +185,7 @@ end
   end
 
   def mysql_build_container(project_name,pv)
-   uri = URI.parse("https://loadbalancer1.abd6.example.opentlc.com/oapi/v1/namespaces/"+project_name+"/deploymentconfigs")
+   uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/namespaces/"+project_name+"/deploymentconfigs")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
@@ -282,8 +283,220 @@ response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
 end
   end
 
+
+
+def postgres_build_container(project_name,pv)
+   uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/namespaces/"+project_name+"/deploymentconfigs")
+request = Net::HTTP::Post.new(uri)
+request.content_type = "application/json"
+request["Authorization"] = TOKEN
+request["Accept"] = "application/json"
+request.body = JSON.dump({
+  "apiVersion": "v1",
+  "kind": "DeploymentConfig",
+  "metadata": {
+    "creationTimestamp": null,
+    "generation": 1,
+
+      "labels": {
+
+         "app": "postgresql"
+
+      },
+
+      "name": "postgresql",
+      "namespace" => project_name
+
+   },
+
+   "spec": {
+
+      "replicas": 1,
+
+      "revisionHistoryLimit": 10,
+
+      "selector": {
+
+         "app": "postgresql",
+
+         "deploymentconfig": "postgresql"
+
+      },
+
+      "strategy": {
+
+         "activeDeadlineSeconds": 21600,
+
+         "resources": {},
+
+         "rollingParams": {
+
+            "intervalSeconds": 1,
+
+            "maxSurge": "25%",
+
+            "maxUnavailable": "25%",
+
+            "timeoutSeconds": 600,
+
+            "updatePeriodSeconds": 1
+
+         },
+
+         "type": "Rolling"
+
+      },
+
+      "template": {
+
+         "metadata": {
+
+            "annotations": {
+
+               "openshift.io/generated-by": "OpenShiftNewApp"
+
+            },
+
+            "creationTimestamp": null,
+
+            "labels": {
+
+               "app": "postgresql",
+
+               "deploymentconfig": "postgresql"
+
+            }
+
+         },
+
+         "spec": {
+
+            "containers": [
+
+               {
+
+                  "env": [
+
+                     {
+
+                        "name": "POSTGRESQL_DATABASE",
+
+                        "value": "gogs"
+
+                     },
+
+                     {
+
+                        "name": "POSTGRESQL_PASSWORD",
+
+                        "value": "root"
+
+                     },
+
+                     {
+
+                        "name": "POSTGRESQL_USER",
+
+                        "value": "root"
+
+                     }
+
+                  ],
+
+                  "image": "dcartifactory.service.dev:5000/openshift3/postgresql-94-rhel7@sha256:c18718bbbd0c94827d9c6ecea41d9515755b6470f15969ce8a633d161f848ece",
+
+                  "imagePullPolicy": "Always",
+
+                  "name": "postgresql",
+
+                  "ports": [
+
+                     {
+
+                        "containerPort": 5432,
+
+                        "protocol": "TCP"
+
+                     }
+
+                  ],
+
+                  "resources": {},
+
+                  "terminationMessagePath": "/dev/termination-log",
+
+                  "terminationMessagePolicy": "File",
+
+                  "volumeMounts": [
+
+                     {
+
+                        "mountPath": "/var/lib/pgsql/data",
+
+                        "name": "postgresql"
+
+                     }
+
+                  ]
+
+               }
+
+            ],
+
+            "dnsPolicy": "ClusterFirst",
+
+            "restartPolicy": "Always",
+
+            "schedulerName": "default-scheduler",
+
+            "securityContext": {},
+
+            "terminationGracePeriodSeconds": 30,
+
+            "volumes": [
+
+               {
+
+                  "emptyDir": {},
+
+                  "name": "postgresql"
+
+               }
+
+            ]
+
+         }
+
+      },
+
+      "test": false
+
+   }
+
+})
+
+  req_options = {
+    use_ssl: uri.scheme == "https",
+    verify_mode: OpenSSL::SSL::VERIFY_NONE,
+  }
+
+  response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+    http.request(request)
+  end
+end
+
+
+
+
+
+
+
+
+
+
+
   def svc_build_container(project_name)
-   uri = URI.parse("https://loadbalancer1.abd6.example.opentlc.com/api/v1/namespaces/"+project_name+"/services")
+   uri = URI.parse("https://ose.cpaas.service.test:8443/api/v1/namespaces/"+project_name+"/services")
 request = Net::HTTP::Post.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN
@@ -322,7 +535,7 @@ end
 
   def destroy
     project = Project.find_by_id(params[:id])
-    uri = URI.parse("https://loadbalancer1.abd6.example.opentlc.com/oapi/v1/projects/"+project.try(:project_name))
+    uri = URI.parse("https://ose.cpaas.service.test:8443/oapi/v1/projects/"+project.try(:project_name))
 request = Net::HTTP::Delete.new(uri)
 request.content_type = "application/json"
 request["Authorization"] = TOKEN

@@ -1,48 +1,64 @@
     
-  <div id="loginbox" style="margin-top:50px;width:40%" class="col-sm-offset-1">                    
+  <div id="loginbox" style="margin-top:280px;width:34%;margin-left:46% !important;" class="col-sm-offset-5">                    
+        
+  <!-- <div id="loginbox" style="margin-top:160px;width:40%" class="mainbox col-md-6 col-md-offset-1 col-sm-8 col-sm-offset-2">  -->                   
     <div class="panel panel-info" >
       <div class="panel-heading">
        <div class="row">
         <div class="col-md-6 panel-title">Sign In</div>
-        <div class="col-sm-offset-10"><img src="/assets/siteicon1.ico" style="width:30px"></img></div>
+        <div class="col-sm-offset-10"><!-- <img src="../../../assets/logo.png" style="height:30px"></img> --></div>
        </div>
       </div>     
 
       <div style="padding-top:30px" class="panel-body" >
         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "form-horizontal")do |f| %>
-            <div style="margin-bottom: 25px" class="input-group">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => 'new_user_sign_in'})do |f| %>
+          <%if resource.errors.present? %>
+        <div id="signupalert" class="alert alert-danger">
+          <p>Error:</p>
+          <span><%= devise_error_messages! %></span>
+        </div>
+        <%end%>
+
+      <span class="error_email"></span>
+            <div style="margin-bottom: 25px" class="input-group">   
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <%= f.email_field :email, class: "form-control", placeholder: "Enter email",autocomplete: "email" %>                                        
+              <%= f.email_field :email, class: "form-control", placeholder: "Enter email",autocomplete: "off" %>  
+              
+        
             </div>
+      <span class="error_pass"></span>
             <div style="margin-bottom: 25px" class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <%= f.password_field :password, class: "form-control", placeholder: "password" %>
+              <%= f.password_field :password, class: "form-control", placeholder: "password",autocomplete: "off" %>
+        
             </div>
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="checkbox">
                 <label>
                   <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+          
                 </label>
               </div>
-            </div>
+            </div> -->
             <div style="margin-top:10px" class="form-group">
                                     
               <div class="col-sm-12 controls" style="margin-bottom: 10px">
                 <%=f.submit 'Login', class: "btn btn-success"%>
+        <span class="error_submit"></span>
               </div>
             </div>
-
+      <%end%>
 
             <div class="form-group">
                 <div class="col-md-12 control">
-                    <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                    <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%;color: #fff" >
                         Don't have an account! 
-                    <%= link_to "Sign Up Here", new_user_registration_path, :class => 'navbar-link'  %>
+                    <%= link_to "Sign Up Here", new_user_registration_path, :class => 'navbar-link',style: "color: #b2d9fb" %>
                     </div>
                 </div>
             </div> 
-          <%end%>      
+                
         </div>                     
       </div>  
     </div>

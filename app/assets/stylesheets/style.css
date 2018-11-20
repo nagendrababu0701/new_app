@@ -57,3 +57,50 @@
 .memory-field label:last-of-type {
   border-radius: 0 4px 4px 0;
 }
+.panel-title{color: #fff !important;}
+.panel-info>.panel-heading{background-color: #4175bb8c;}
+.panel{background-color: #0f1b2b80;}
+.panel-info{border-color: transparent !important;}
+.control-label{color: #fff}
+.error_lanid{color: red}
+.error_first_name{color: red;}
+.error_last_name{color: red;}
+.error_confirm_pass{color: red;}
+.error_project{color: red}
+
+/* ************** form validations styles ************ */
+.error{
+  display: none;
+  margin-left: 10px;
+}   
+.error_email{color: red}
+.error_pass{color: red}
+.error_submit{color: red}
+.error_show{
+  color: red;
+  margin-left: 10px;
+}
+
+input.invalid, textarea.invalid, select.invalid{
+  border: 2px solid red;
+}
+
+input.valid, textarea.valid, select.valid{
+  border: 2px solid green;
+}
+
+a {
+    color: #3170ED;
+    text-decoration: none;
+}
+.btn-success {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+.btn-create-project {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+/* ************ form validations styles ends ********** */
